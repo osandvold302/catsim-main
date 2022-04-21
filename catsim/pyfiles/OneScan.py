@@ -3,7 +3,7 @@
 import numpy as np
 import copy, time
 import matplotlib.pyplot as plt
-from catsim.CommonTools import *
+from catsim.pyfiles.CommonTools import *
 
 def one_scan(cfg):
     cfg = initialize_scan(cfg)

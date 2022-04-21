@@ -1,6 +1,6 @@
 # Copyright 2020, General Electric Company. All rights reserved. See https://github.com/xcist/code/blob/master/LICENSE
 
-from catsim.CommonTools import *
+from catsim.pyfiles.CommonTools import *
 
 
 # This is a simplified kernel based scatter model, will have roughly 15% SPR for 35-cm water phantom, 120 kVp, 40-mm beam width.

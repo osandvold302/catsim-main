@@ -25,7 +25,6 @@ ct.run_all()  # run the scans defined by protocol.scanTypes
 
 
 ##--------- Show results
-import numpy as np
 import matplotlib.pyplot as plt
 
 prep = xc.rawread(ct.resultsName+'.prep', [ct.protocol.viewCount, ct.scanner.detectorRowCount, ct.scanner.detectorColCount], 'float')

@@ -3,8 +3,8 @@
 from ctypes import *
 import numpy as np
 import os, sys
-from catsim.ReadMaterialFile import ReadMaterialFile
-from catsim.CommonTools import *
+from catsim.pyfiles.ReadMaterialFile import ReadMaterialFile
+from catsim.pyfiles.CommonTools import *
 
 def GetMu(materialFile, Evec):
 

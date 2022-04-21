@@ -3,7 +3,7 @@
 import numpy as np
 import ctypes
 from numpy.ctypeslib import ndpointer
-from catsim.CommonTools import *
+from catsim.pyfiles.CommonTools import *
 
 #----------------- load C lib
 clib = load_C_lib()

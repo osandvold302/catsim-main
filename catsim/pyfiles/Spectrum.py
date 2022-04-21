@@ -3,7 +3,7 @@
 import numpy as np
 import numpy.matlib as nm
 import os
-from catsim.CommonTools import *
+from catsim.pyfiles.CommonTools import *
 
 def Spectrum(cfg):
     '''

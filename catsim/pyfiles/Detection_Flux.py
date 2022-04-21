@@ -2,7 +2,7 @@
 
 import numpy as np
 import numpy.matlib as nm
-from catsim.CommonTools import *
+from catsim.pyfiles.CommonTools import *
 
 def Detection_Flux(cfg):
     '''

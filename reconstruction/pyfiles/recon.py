@@ -1,9 +1,9 @@
 # Copyright 2020, General Electric Company. All rights reserved. See https://github.com/xcist/code/blob/master/LICENSE
-
-from catsim.CommonTools import *
+import catsim as xc
+from catsim.pyfiles.CommonTools import *
 import matplotlib.pyplot as plt
+import numpy as np
 # Need to import new recons as they are added
-from reconstruction.pyfiles.fdk_equiAngle import fdk_equiAngle
 
 
 def recon(cfg):
@@ -36,7 +36,7 @@ def recon(cfg):
 def load_prep(cfg):
 
     print("* Loading the projection data...")
-    prep = rawread(cfg.resultsName + ".prep",
+    prep = xc.rawread(cfg.resultsName + ".prep",
                   [cfg.protocol.viewCount, cfg.scanner.detectorRowCount, cfg.scanner.detectorColCount],
                   'float')
                   
@@ -66,7 +66,7 @@ def saveImageVolume(cfg, imageVolume3D):
     fname = cfg.resultsName + '_' + imageVolume3D_size_string + '.raw'
     imageVolume3D = imageVolume3D.transpose(2, 0, 1)
     imageVolume3D = imageVolume3D.copy(order='C')
-    rawwrite(fname, imageVolume3D)
+    xc.rawwrite(fname, imageVolume3D)
 
 
 def saveSingleImages(cfg, imageVolume3D):
@@ -80,7 +80,7 @@ def saveSingleImages(cfg, imageVolume3D):
         fileName = cfg.resultsName + '_' + sliceNumberString + '_' + imageVolume3D_size_string + '.raw'
         sliceToSave = imageVolume3D[:, :, sliceIndexToSave]
         sliceToSave = sliceToSave.copy(order='C')
-        rawwrite(fileName, sliceToSave)
+        xc.rawwrite(fileName, sliceToSave)
 
 
 def displayImagePictures(cfg, imageVolume3D):

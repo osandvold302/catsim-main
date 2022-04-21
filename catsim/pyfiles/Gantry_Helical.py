@@ -3,7 +3,7 @@
 import numpy as np
 import math
 import copy
-from catsim.CommonTools import *
+from catsim.pyfiles.CommonTools import *
 
 def Gantry_Helical(cfg, viewId):
     ### calculate transform matrices

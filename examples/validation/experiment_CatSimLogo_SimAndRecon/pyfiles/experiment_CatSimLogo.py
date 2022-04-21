@@ -526,7 +526,7 @@ def getUserPath():
     if not os.path.exists(userPath):
         raise Exception("******** Error! Environment variable 'XCIST_UserPath' not found.".format(userPath))
 
-    xc.CommonTools.my_path.add_search_path(userPath)
+    xc.pyfiles.CommonTools.my_path.add_search_path(userPath)
     return userPath
 
 
@@ -538,8 +538,8 @@ experimentDirectory = os.path.join(userPath, "my_experiments", "experiment_CatSi
 # Use the default cfg parameters found in Scanner_Default.cfg, Physics_Default.cfg, Protocol_Default.cfg.
 # Use experiment-specific config files Phantom_CatSimLogo.cfg and Recon_CatSimLogo.cfg.
 
-cfg = xc.CatSim(xc.CommonTools.my_path.find("cfg", "Phantom_CatSimLogo.cfg", ""),
-                xc.CommonTools.my_path.find("cfg", "Recon_CatSimLogo.cfg", ""))
+cfg = xc.CatSim(xc.pyfiles.CommonTools.my_path.find("cfg", "Phantom_CatSimLogo.cfg", ""),
+                xc.pyfiles.CommonTools.my_path.find("cfg", "Recon_CatSimLogo.cfg", ""))
 
 # These are changes to the defaults config parameters to be used for the "base" experiment,
 # but some of these and some other defaults are overridden for certain experiments.
@@ -577,17 +577,17 @@ cfg.displayWindowMax = 200              # In HU.
 
 experimentNames = [
     "01_01_Baseline",
-    "01_02_Physics_eNoiseOn",
-    "01_03_Physics_qNoiseOn",
-    "01_04_Physics_NoiseOn",
-    "01_05_Physics_1ebin",
-    "01_06_Physics_eNoiseOn_1ebin",
-    "01_07_Physics_qNoiseOn_1ebin",
-    "01_08_Physics_NoiseOn_1ebin",
-    "01_09_Physics_Monoenergetic",
-    "01_10_Physics_eNoiseOn_Monoenergetic",
-    "01_11_Physics_qNoiseOn_Monoenergetic",
-    "01_12_Physics_NoiseOn_Monoenergetic",
+    # "01_02_Physics_eNoiseOn",
+    # "01_03_Physics_qNoiseOn",
+    # "01_04_Physics_NoiseOn",
+    # "01_05_Physics_1ebin",
+    # "01_06_Physics_eNoiseOn_1ebin",
+    # "01_07_Physics_qNoiseOn_1ebin",
+    # "01_08_Physics_NoiseOn_1ebin",
+    # "01_09_Physics_Monoenergetic",
+    # "01_10_Physics_eNoiseOn_Monoenergetic",
+    # "01_11_Physics_qNoiseOn_Monoenergetic",
+    # "01_12_Physics_NoiseOn_Monoenergetic",
 
     # "02_01_Physics_NoiseOn_Recon_128mmFOV_R-LKernel", # Needs to be done before the next 4 because those use projections from this.
     # "02_02_Physics_NoiseOn_Recon_128mmFOV_S-LKernel",
@@ -608,7 +608,7 @@ experimentNames = [
     # "05_03_Physics_SourceSampling3_Recon_128mmFOV",
     # "05_04_Physics_DetectorSampling1_Recon_128mmFOV",
     # "05_05_Physics_DetectorSampling2_Recon_128mmFOV",
-    # "05_06_Physics_DetectorSampling3_Recon_128mmFOV",
+    "05_06_Physics_DetectorSampling3_Recon_128mmFOV",
     # "05_07_Physics_ViewSampling1_Recon_300mmFOV",
     # "05_08_Physics_ViewSampling2_Recon_300mmFOV",
     # "05_09_Physics_ViewSampling3_Recon_300mmFOV",

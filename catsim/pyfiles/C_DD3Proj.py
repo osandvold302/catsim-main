@@ -3,7 +3,7 @@
 import numpy as np
 from ctypes import *
 from numpy.ctypeslib import ndpointer
-from catsim.CommonTools import *
+from catsim.pyfiles.CommonTools import *
 
 '''
 Wrapper of DD3 Projector.

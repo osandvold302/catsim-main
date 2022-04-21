@@ -2,9 +2,9 @@
 
 import numpy as np
 import numpy.matlib as nm
-from catsim.GetMu import GetMu
-from catsim.randpf import randpf
-from catsim.CommonTools import *
+from catsim.pyfiles.GetMu import GetMu
+from catsim.pyfiles.randpf import randpf
+from catsim.pyfiles.CommonTools import *
 
 def Detection_EI(cfg, viewId, subViewId):
 

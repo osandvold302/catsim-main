@@ -1,9 +1,9 @@
 # Copyright 2020, General Electric Company. All rights reserved. See https://github.com/xcist/code/blob/master/LICENSE
 
 import numpy as np
-from catsim.CommonTools import *
-from catsim.OneScan import one_scan
-import catsim.PrepView as PrepView
+from catsim.pyfiles.CommonTools import *
+from catsim.pyfiles.OneScan import one_scan
+import catsim.pyfiles.PrepView as PrepView
 
 class CatSim:
     '''
