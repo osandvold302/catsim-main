@@ -120,6 +120,37 @@ def PlotProfile(cfg, data, weights, save=True, show=True, filename=None):
     if show: plt.show()
     plt.close()
 
+def Plot3dBar(cfg, data, weights, save=True, show=True):
+    allx = data[:,0]
+    allz = data[:,2]
+    #fig, ax = plt.subplots(projection='3d')
+    fig = plt.figure(figsize=(10,10))
+    #ax = fig.gca(projection='3d')
+    ax = fig.add_subplot(111, projection='3d')
+    ax.bar3d(allx, allz, np.zeros(len(weights)), 0.04, 0.04, weights, shade=True)
+    if len(allx) > 1:
+        _z = (np.max(allz)-np.min(allz))/(np.max(allx)-np.min(allx))
+        ax.set_box_aspect([1, _z, 1])
+    ax.set_xlabel('x')
+    ax.set_ylabel('z')
+    ax.set_zlabel('weights')
+    #fig.colorbar(ax)
+    #ax.view_init(30, -90-37.5) #if performix
+    ax.view_init(30, -37.5) #else
+    #ax.view_init(90, 0) #else
+    plt.tight_layout()
+    if save:
+        name = "3dbar_"
+        if hasattr(cfg.scanner, "focalspotShape"): name += cfg.scanner.focalspotShape
+        else: name += os.path.basename(cfg.scanner.focalspotData)
+        name += "_src-{}x{}".format(cfg.physics.srcXSampleCount, cfg.physics.srcYSampleCount)
+        name += "_spotsize-{:.2f}x{:.2f}".format(cfg.scanner.focalspotWidth, cfg.scanner.focalspotLength)
+        name += "_thre-{:.2f}x{:.2f}".format(cfg.scanner.focalspotWidthThreshold, cfg.scanner.focalspotLengthThreshold)
+        name += "_pixsize-{:.2f}x{:.2f}".format(cfg.scanner.focalspotPixSizeX, cfg.scanner.focalspotPixSizeZ)
+        plt.savefig(name+".png")
+    if show: plt.show()
+    plt.close()
+
 # input data is pixel cloud
 def TriSurfData(cfg, data, weights, save=True, show=True):
     import matplotlib.tri as mtri
@@ -284,6 +315,7 @@ def SetFocalspot(cfg):
     os_dz = (os_range_z[1] - os_range_z[0]+dz)/os_nz
     os_x = (np.arange(os_nx)-(os_nx-1)*0.5)*os_dx
     os_z = (np.arange(os_nz)-(os_nz-1)*0.5)*os_dz
+    os_y = -os_z/np.tan(cfg.scanner.targetAngle*np.pi/180.);
     [os_xx, os_zz] = np.meshgrid(os_x, os_z)
     #When on a regular grid with x.size = m and y.size = n, if z.ndim == 2, then z must have shape (n, m)
     os_interp = interpolate.interp2d(fs_pos_x, fs_pos_z, I.T, kind='linear')
@@ -294,7 +326,7 @@ def SetFocalspot(cfg):
         os_xx *= cfg.scanner.focalspotWidth/W0
         os_zz *= cfg.scanner.focalspotLength/L0
 
-    os_yy = os_zz/np.tan(cfg.scanner.targetAngle*np.pi/180.);
+    os_yy = -os_zz/np.tan(cfg.scanner.targetAngle*np.pi/180.);
 
     # remove low-weight sampling and normalized
     weights = os_I
@@ -310,9 +342,11 @@ def SetFocalspot(cfg):
     #samples[:,2] -= (np.max(samples[:,2]) + np.min(samples[:,2]))*0.5
     samples[:,0] -= np.average(samples[:,0], weights=weights)
     samples[:,1] -= np.average(samples[:,1], weights=weights)
+    samples[:,1] += cfg.scanner.sid
     samples[:,2] -= np.average(samples[:,2], weights=weights)
     # validate samples and weights
     #ValidateFocalspot(samples, weights)
+    #Plot3dBar(cfg, samples, weights, True, False)
     #name = ""
     #if hasattr(cfg.scanner, "focalspotShape"): name += cfg.scanner.focalspotShape
     #else: name += os.path.basename(cfg.scanner.focalspotData)
@@ -332,12 +366,17 @@ def SetFocalspot(cfg):
         samples = samples + nm.repmat(cfg.protocol.focalspotOffset, nSamples, 1)
 
     # find corners
-    if nx==1 and ny==1:
+    if os_nx==1 and os_ny==1:
         corners = samples
-    elif nx>1 and ny>1:
+    elif os_nx>1 and os_ny>1:
+        # this method does not apply to non-uniform grid
         #corners = np.c_[samples[0, :], samples[os_nx-1, :], samples[(os_ny-1)*os_nx, :], samples[-1, :]].T
-        corners = np.c_[os_xx, cfg.scanner.sid+os_yy, os_zz]
-        corners = np.c_[corners[0, 0], corners[0, -1], corners[-1, 0], corners[-1, -1]].T
+        #corners = np.c_[os_xx, cfg.scanner.sid+os_yy, os_zz]
+        #corners = np.c_[corners[0, 0], corners[0, -1], corners[-1, 0], corners[-1, -1]].T
+        corners = np.array([[os_x[0], cfg.scanner.sid+os_y[0], os_z[0]],
+                            [os_x[0], cfg.scanner.sid+os_y[-1], os_z[-1]],
+                            [os_x[1], cfg.scanner.sid+os_y[-1], os_z[-1]],
+                            [os_x[1], cfg.scanner.sid+os_y[0], os_z[0]]])
     else:
         corners = np.c_[samples[0, :], samples[-1, :]].T
     nCorners = corners.shape[0]
@@ -362,4 +401,5 @@ def SetFocalspot(cfg):
     #VisInterpData(cfg, samples, weights, True, False)
     #exit()
 
+    #breakpoint()
     return cfg
