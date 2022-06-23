@@ -24,7 +24,7 @@ def Detection_prefilter( cfg ):
 if __name__ == "__main__":
     cfg = CFG()
     cfg.detector = CFG()
-    cfg.scanner.detectorPrefilter = ['al', 0.1, 'water', 2]
+    cfg.scanner.detectorPrefilter = ['Al', 0.1, 'water', 2]
 
     cfg = source_cfg("./cfg/default.cfg", cfg)
     

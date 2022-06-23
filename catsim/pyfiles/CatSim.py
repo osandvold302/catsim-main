@@ -3,6 +3,8 @@
 from catsim.pyfiles.CommonTools import *
 from catsim.pyfiles.OneScan import one_scan
 
+import os
+
 class CatSim:
     '''
     Run airscan, offset scan, phantom scan --> save rawdata (.air .offset .scan)
@@ -45,6 +47,7 @@ class CatSim:
 
     def phantom_scan(self, *para):
         cfg = self.get_current_cfg(*para)
+        print(os.getcwd())
         print('Phantom scan')
         cfg.sim.thisScanType = [0, 0, 1]
         cfg = one_scan(cfg)
