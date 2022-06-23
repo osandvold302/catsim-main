@@ -17,5 +17,6 @@ setup(name='catsim',
       zip_safe=False,
       package_data={'catsim':[r'lib/*.*', r'cfg/*.cfg', 
         r'bowtie/*.txt', r'material/*', r'material/edlp/*/*.dat',
-        r'phantom/*.*', r'scatter/*.dat', r'spectrum/*.dat']},
+        r'phantom/*.*', r'scatter/*.dat', r'spectrum/*.dat',
+        r'pyfiles/*.py']},
       include_package_data=True)

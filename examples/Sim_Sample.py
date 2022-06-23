@@ -9,7 +9,7 @@ import catsim as xc
 # add any additional search directories
 #my_path.add_search_path("my-experiments")
 
-ct = xc.CatSim("./cfg/Phantom_Sample", "./cfg/Scanner_Sample_generic", "./cfg/Protocol_Sample_axial")  # initialization
+ct = xc.CatSim("./examples/cfg/Phantom_Sample", "./examples/cfg/Scanner_Sample_generic", "./examples/cfg/Protocol_Sample_axial")  # initialization
 
 ##--------- Make changes to parameters (optional)
 ct.resultsName = "test"
@@ -29,4 +29,7 @@ import matplotlib.pyplot as plt
 prep = xc.rawread(ct.resultsName+'.prep', [ct.protocol.viewCount, ct.scanner.detectorRowCount, ct.scanner.detectorColCount], 'float')
 prep = prep[-1, :, :]
 plt.plot(prep[7, :])
-plt.show()
+#plt.show()
+
+plt.savefig('Sim_Sample.png')
+
